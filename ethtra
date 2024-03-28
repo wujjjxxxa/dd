@@ -1,0 +1,41 @@
+const Web3 = require('web3');
+
+// 连接到以太坊节点
+const web3 = new Web3('https://mainnet.infura.io/v3/your_infura_project_id');
+
+// 获取账户信息
+const getAccountInfo = async (address) => {
+  try {
+    const balance = await web3.eth.getBalance(address);
+    console.log('Balance:', web3.utils.fromWei(balance, 'ether'), 'ETH');
+  } catch (error) {
+    console.error('Error fetching account info:', error);
+  }
+};
+
+// 发送以太币
+const sendEther = async (from, to, amount) => {
+  try {
+    const accounts = await web3.eth.getAccounts();
+    const gasPrice = await web3.eth.getGasPrice();
+    const txCount = await web3.eth.getTransactionCount(from);
+    const txObject = {
+      from: from,
+      to: to,
+      value: web3.utils.toWei(amount, 'ether'),
+      gasPrice: gasPrice,
+      nonce: web3.utils.toHex(txCount)
+    };
+    const signedTx = await web3.eth.accounts.signTransaction(txObject, 'your_private_key');
+    const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+    console.log('Transaction receipt:', receipt);
+  } catch (error) {
+    console.error('Error sending ether:', error);
+  }
+};
+
+// 调用函数获取账户信息
+getAccountInfo('0xYourEthereumAddress');
+
+// 调用函数发送以太币（需要您的以太坊地址和收件人地址以及要发送的数量）
+// sendEther('0xYourEthereumAddress', '0xRecipientAddress', '1');
