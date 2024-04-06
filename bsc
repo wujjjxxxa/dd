@@ -1,0 +1,37 @@
+const { Binance } = require('@binance-chain/javascript-sdk');
+
+// 创建 Binance 实例
+const bnbClient = new Binance({
+  apiKey: 'YOUR_API_KEY',
+  apiSecret: 'YOUR_API_SECRET',
+  // 如果您使用的是 BSC 测试网，请设置以下节点地址
+  // network: 'data-seed-prebsc-1-s1.binance.org:8545'
+});
+
+// 设置发送者和接收者地址
+const senderAddress = 'YOUR_SENDER_ADDRESS';
+const recipientAddress = 'RECIPIENT_ADDRESS';
+
+// 设置转账金额（以最小单位为单位，通常是 wei 或 satoshi）
+const amount = 0.1;
+
+// 发送交易
+async function sendTransaction() {
+  try {
+    // 构造交易对象
+    const result = await bnbClient.transfer(
+      senderAddress,
+      recipientAddress,
+      amount,
+      'BNB'
+    );
+
+    // 打印交易结果
+    console.log('Transaction hash:', result.result[0].hash);
+  } catch (error) {
+    console.error('Error occurred:', error);
+  }
+}
+
+// 发送交易
+sendTransaction();
