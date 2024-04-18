@@ -1,0 +1,23 @@
+import com.binance.api.client.BinanceApiClientFactory;
+import com.binance.api.client.BinanceApiRestClient;
+import com.binance.api.client.domain.TransferType;
+
+public class BnbTransferExample {
+
+    public static void main(String[] args) {
+        String apiKey = "your_api_key";
+        String secretKey = "your_secret_key";
+
+        BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance(apiKey, secretKey);
+        BinanceApiRestClient client = factory.newRestClient();
+
+        // 转账操作
+        String asset = "BNB";
+        String fromAccount = "Spot";
+        String toAccount = "Margin"; // 根据您的需求更改账户类型
+        Double amount = 1.0; // 转账数量
+
+        client.transfer(asset, fromAccount, toAccount, amount, TransferType.MAIN_C2M);
+        System.out.println("BNB transferred successfully.");
+    }
+}
