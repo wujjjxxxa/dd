@@ -1,0 +1,9 @@
+const Web3 = require('web3');
+
+// 使用 Infura 提供的节点地址连接到以太坊主网
+const web3 = new Web3('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
+
+// 检查连接
+if (!web3.isConnected()) {
+    console.error('无法连接到以太坊节点');
+}
